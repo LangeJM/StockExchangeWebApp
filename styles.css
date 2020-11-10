@@ -9,3 +9,21 @@
 .smallFont {
     font-size: 0.75rem;
 }
+
+.imgResizeSmall {
+    width: 1.5rem!important;
+    height: auto;
+}
+
+.imgResizeNormal {
+    width: 5rem!important;
+    height: auto;
+}
+
+.negativeRedFont {
+    color: #ed2926;
+}
+
+.posOrEqualGreenFont {
+    color: #27e359;
+}

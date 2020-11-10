@@ -38,6 +38,7 @@ async function getCompany() {
 
 function companyToHtml(data) {
     companyLabel.src = data.profile.image;
+    companyLabel.classList.add("img-fluid", "imgResizeNormal");
     let aTag = document.createElement("a");
     aTag.setAttribute('href',data.profile.website);
     aTag.textContent = ` ${data.profile.companyName} (${data.profile.sector}) `;
