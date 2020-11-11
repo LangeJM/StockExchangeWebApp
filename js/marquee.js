@@ -11,11 +11,9 @@ async function getMajorIndexesApiResponse() {
 
 
 function createMarqueeText (data) {
-    // data = getMajorIndexesApiResponse();
     let marqueeString = "";
     const marqueeParentEl = document.querySelector('#marqueeText');
     for (i in data) {
-        // marqueeString += `${data[i].symbol.slice(1,)} ${data[i].change}  `;
         let newSymbolEl = document.createElement("div");
         newSymbolEl.classList.add("smallFont", "mr-1");
         newSymbolEl.innerText = `${data[i].symbol.slice(1,)} `
@@ -31,9 +29,6 @@ function createMarqueeText (data) {
         }
         marqueeParentEl.appendChild(newChangeEl);
     }
-    
-    // document.querySelector('#marqueeText').innerHTML = marqueeString;
-    // console.log(marqueeString);
 }
 
 getMajorIndexesApiResponse()

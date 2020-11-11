@@ -28,17 +28,6 @@
     color: #27e359;
 }
 
-/* #marqueeText div {
-    display: inline!important;
-}
-
-#marqueeText {
-    white-space:nowrap!important;
-} */
-
-/* Marqueeeee */
-
-
 
 #marqueeText {
  color: blue;
@@ -51,9 +40,9 @@
  
  /* I took code from here (https://colibriwp.com/blog/scrolling-text/) and modified it. Stil WIP. 
  /* Apply animation to this element */
- -moz-animation: marqueeText 10s linear infinite;
- -webkit-animation: marqueeText 10s linear infinite;
- animation: marqueeText 10s linear infinite;
+ -moz-animation: marqueeText 20s linear infinite;
+ -webkit-animation: marqueeText 20s linear infinite;
+ animation: marqueeText 20s linear infinite;
 }
 /* Move it (define the animation) */
 @-moz-keyframes marqueeText {
