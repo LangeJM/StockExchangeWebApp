@@ -11,7 +11,7 @@ const companyStockPrice = document.querySelector('#companyStockPrice');
 const companyStockPriceChange = document.querySelector('#companyStockPriceChange');
 const companyDescription = document.querySelector('#companyDescription');
 const elementsToHide = document.getElementsByClassName('elementsToHide');
-const spinner = document.querySelector('#spinner');
+const spinner = document.querySelector('#spinnerLarge');
 const superContainer = document.querySelector('#superContainer');
 
 

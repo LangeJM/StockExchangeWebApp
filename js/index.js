@@ -38,8 +38,16 @@ function resultsToHtmlList(companyObject) {
         symbolEl.classList.add("smallFont");
         let stockChangesEl = document.createElement("div");
         stockChangesEl.classList.add("smallFont");
-        if (changes < 0) stockChangesEl.classList.add("negativeRedFont")
-        else stockChangesEl.classList.add("posOrEqualGreenFont");
+        if (changes < 0) {
+            stockChangesEl.classList.add("negativeRedFont");
+            stockChangesEl.textContent = `(${changes})`;
+        } else if (changes === 'Not available') {
+            stockChangesEl.classList.add("notavailableFont");
+            stockChangesEl.textContent = `(${changes})`;
+        } else {
+            stockChangesEl.classList.add("posOrEqualGreenFont");
+            stockChangesEl.textContent = `(+${changes})`;
+        }
 
         let imgTag = document.createElement("img");
         imgTag.classList.add("img-fluid", "imgResizeSmall");
@@ -51,37 +59,35 @@ function resultsToHtmlList(companyObject) {
         labelEl.appendChild(imgTag);
         childParent.appendChild(labelEl);
         
-        aTag.setAttribute('href','./company.html?symbol=' + symbol);
-        aTag.textContent = ` ${companyName} `;
-        nameEl.appendChild(aTag);
-        childParent.appendChild(nameEl);
-        nameEl.className = "bold-text px-3";
+        if (companyName === 'Not available') {
+            aTag.textContent = ` ${companyName} `;
+            aTag.classList.add("notavailableFont");
+            nameEl.appendChild(aTag);
+            childParent.appendChild(nameEl);
+            nameEl.className = "bold-text px-3";
+            
+        } else {
+            aTag.setAttribute('href','./company.html?symbol=' + symbol);
+            aTag.textContent = ` ${companyName} `;
+            nameEl.appendChild(aTag);
+            childParent.appendChild(nameEl);
+            nameEl.className = "bold-text px-3";
+        }
 
         symbolEl.textContent = `(${symbol})`;
         childParent.appendChild(symbolEl);
-        stockChangesEl.textContent = `(${changes})`;
         childParent.appendChild(stockChangesEl);  
     }
     hideSpinner();
 }
 
-// searchButton.onclick = getApiResponse(); //This somehow works as on window load and doesn't wait for the search value from search box. The alternative eventlistener 'click' doesn't work for some reason. Need to look into it.
-
-const clickMe = document.querySelector("#clickMe");
-// clickMe.onclick = getApiResponse();
-
-// Will do something with the below function for one of the next milestones
-// searchBox.addEventListener('input', () => {
-//     searchInput = searchBox.value;
-//     console.log(searchInput);
-//     return searchInput
-// });
-
+searchButton.addEventListener('click', () => {
+    getApiResponse();
+});
 
 async function getApiResponse() {
     showSpinner();
     let searchInput = searchBox.value;
-    alert(searchInput);
     const searchUrl = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/search?query=${searchInput}&limit=10&exchange=NASDAQ`;
     const response = await fetch(searchUrl);
     const data = await response.json();
@@ -92,18 +98,21 @@ async function getApiResponse() {
         let symbol = data[x].symbol;
         companyObject[x]['symbol'] = symbol;
 
-        const companyEndpoint = 'https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/'
-        const compResponse = await fetch(companyEndpoint+symbol);
-        const compData = await compResponse.json();
-
-        if (typeof(compData.profile.companyName) == 'undefined' || compData.profile.companyName === null) { //This doesn't do the trick, need to further investigate
-            companyObject[x]['companyName'] = 'No record available';    
-        } else {
+        try {
+            const companyEndpoint = 'https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/'
+            const compResponse = await fetch(companyEndpoint+symbol);
+            const compData = await compResponse.json();
             companyObject[x]['companyName'] = compData.profile.companyName;
+            companyObject[x]['image'] = compData.profile.image;
+            companyObject[x]['changes'] = compData.profile.changes;
         }
-        
-        companyObject[x]['image'] = compData.profile.image;
-        companyObject[x]['changes'] = compData.profile.changes;
+        catch(err) {
+            console.error(`There is a problem accessing the data for company symbol "${symbol}" with >> ${err}`);
+            companyObject[x]['companyName'] = 'Not available';
+            companyObject[x]['image'] = "./images/bearbull_favicon.png";
+            companyObject[x]['changes'] = 'Not available';
+            continue   
+        }
     }
     resultsToHtmlList(companyObject);
 }

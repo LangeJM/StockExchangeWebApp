@@ -1,4 +1,8 @@
 .spinner {
+    visibility: hidden;
+}
+
+.spinnerLarge {
     display:none;
 }
 
@@ -28,6 +32,9 @@
     color: #27e359;
 }
 
+.notavailableFont {
+    color: grey!important;
+}
 
 #marqueeText {
  color: blue;
