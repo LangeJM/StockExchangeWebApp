@@ -65,7 +65,18 @@ function resultsToHtmlList(companyObject) {
     hideSpinner();
 }
 
-searchButton.onclick = getApiResponse(); //This somehow works as on window load and doesn't wait for the search value from search box. The alternative eventlistener 'click' doesn't work for some reason. Need to look into it.
+// searchButton.onclick = getApiResponse(); //This somehow works as on window load and doesn't wait for the search value from search box. The alternative eventlistener 'click' doesn't work for some reason. Need to look into it.
+
+const clickMe = document.querySelector("#clickMe");
+// clickMe.onclick = getApiResponse();
+
+// Will do something with the below function for one of the next milestones
+// searchBox.addEventListener('input', () => {
+//     searchInput = searchBox.value;
+//     console.log(searchInput);
+//     return searchInput
+// });
+
 
 async function getApiResponse() {
     showSpinner();
