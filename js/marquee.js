@@ -11,7 +11,6 @@ async function getMajorIndexesApiResponse() {
 
 
 function createMarqueeText (data) {
-    let marqueeString = "";
     const marqueeParentEl = document.querySelector('#marqueeText');
     for (i in data) {
         let newSymbolEl = document.createElement("div");
