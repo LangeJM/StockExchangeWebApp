@@ -27,3 +27,55 @@
 .posOrEqualGreenFont {
     color: #27e359;
 }
+
+/* #marqueeText div {
+    display: inline!important;
+}
+
+#marqueeText {
+    white-space:nowrap!important;
+} */
+
+/* Marqueeeee */
+
+
+
+#marqueeText {
+ color: blue;
+ width: 100%;
+ height: 1.5rem;
+ margin: 0;
+ line-height: 1rem;
+ text-align: center;
+ 
+ 
+ /* I took code from here (https://colibriwp.com/blog/scrolling-text/) and modified it. Stil WIP. 
+ /* Apply animation to this element */
+ -moz-animation: marqueeText 10s linear infinite;
+ -webkit-animation: marqueeText 10s linear infinite;
+ animation: marqueeText 10s linear infinite;
+}
+/* Move it (define the animation) */
+@-moz-keyframes marqueeText {
+ 0%   { -moz-transform: translateX(100%); } 
+ 100% { -moz-transform: translateX(-100%); }
+}
+@-webkit-keyframes marqueeText {
+ 0%   { -webkit-transform: translateX(100%); }
+ 100% { -webkit-transform: translateX(-100%); }
+}
+@keyframes marqueeText {
+ 0%   { 
+ -moz-transform: translateX(100%); /* Firefox bug fix */
+ -webkit-transform: translateX(100%); /* Firefox bug fix */
+ transform: translateX(100%); 
+ }
+ 100% { 
+ -moz-transform: translateX(-100%); /* Firefox bug fix */
+ -webkit-transform: translateX(-100%); /* Firefox bug fix */
+ transform: translateX(-100%); 
+ }
+}
+
+
+
