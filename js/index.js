@@ -1,14 +1,15 @@
-const spinner = document.querySelector('#spinner');
+const spinnerSmall = document.querySelector('#spinnerSmall');
 const searchButton = document.querySelector('#searchButton');
 const searchBox = document.querySelector('#searchBox');
 let searchUrl;
+
 const resultsListParent = document.querySelector("#searchResultsParent");
 
 function showSpinner() {
-    spinner.classList.remove("spinner");
+    spinnerSmall.classList.remove("spinnerSmall");
 }
 function hideSpinner() {
-    spinner.classList.add("spinner");
+    spinnerSmall.classList.add("spinnerSmall");
 }
 // Will do something with the below function for one of the next milestones
 // searchBox.addEventListener('input', () => {
@@ -56,6 +57,7 @@ function resultsToHtmlList(companyObject) {
         resultsListParent.appendChild(childParent);
 
         imgTag.src = image;
+        imgTag.setAttribute("onerror", "brokenImageToDefault(this)");
         labelEl.appendChild(imgTag);
         childParent.appendChild(labelEl);
         
@@ -115,4 +117,9 @@ async function getApiResponse() {
         }
     }
     resultsToHtmlList(companyObject);
+}
+
+function brokenImageToDefault(image) {
+    const defaultImage = './images/bearbull_favicon.png';
+	image.src = defaultImage;
 }

@@ -11,22 +11,22 @@ const companyStockPrice = document.querySelector('#companyStockPrice');
 const companyStockPriceChange = document.querySelector('#companyStockPriceChange');
 const companyDescription = document.querySelector('#companyDescription');
 const elementsToHide = document.getElementsByClassName('elementsToHide');
-const spinner = document.querySelector('#spinnerLarge');
+const spinnerLarge = document.querySelector('#spinnerLarge');
 const superContainer = document.querySelector('#superContainer');
 
 
-function showSpinner() {
-    spinner.classList.remove("spinner");
+function showSpinnerLarge() {
+    spinnerLarge.classList.remove("spinnerLarge");
     superContainer.classList.add("vh-100", "vw-100", "d-flex", "justify-content-center", "m0");
     for (let i = 0; i < elementsToHide.length; i++) {
         elementsToHide[i].classList.add('hideElements');
     }
 }
-function hideSpinner() {
+function hideSpinnerLarge() {
     for (let i = 0; i < elementsToHide.length; i++) {
         elementsToHide[i].classList.remove('hideElements');
     }
-    spinner.classList.add("spinner");
+    spinnerLarge.classList.add("spinnerLarge");
     superContainer.classList.remove("vh-100", "vw-100", "d-flex", "justify-content-center", "m0");
 }
 
@@ -81,11 +81,11 @@ async function getStocksHistory() {
             }
         }
     });
-    hideSpinner();
+    hideSpinnerLarge();
 }
 
 window.onload = (event) => {
-    showSpinner();
+    showSpinnerLarge();
     if (companyRequestUrl) {
         getCompany(companyRequestUrl);
     } else {alert('no url found')}
