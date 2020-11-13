@@ -36,6 +36,10 @@
     color: grey!important;
 }
 
+.searchResultsWidth {
+    width: 33rem;
+}
+
 #marqueeText {
  color: blue;
  width: 100%;

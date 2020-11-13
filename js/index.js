@@ -31,7 +31,7 @@ function resultsToHtmlList(companyObject) {
         const changes = companyObject[x].changes;
 
         let childParent = document.createElement("div");
-        childParent.classList.add("row", "align-items-center", "py-2");
+        childParent.classList.add("row", "align-items-center", "py-2", "searchResultsWidth", "border-bottom", "pl-3");
         let nameEl = document.createElement("div");
         let labelEl = document.createElement("div");
                 
