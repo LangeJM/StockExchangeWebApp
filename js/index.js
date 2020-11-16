@@ -1,16 +1,16 @@
-const spinnerSmall = document.querySelector('#spinnerSmall');
-const searchButton = document.querySelector('#searchButton');
-const searchBox = document.querySelector('#searchBox');
-let searchUrl;
+// const spinnerSmall = document.querySelector('#spinnerSmall');
+// const searchButton = document.querySelector('#searchButton');
+// const searchBox = document.querySelector('#searchBox');
+// let searchUrl;
 
-const resultsListParent = document.querySelector("#searchResultsParent");
+// const resultsListParent = document.querySelector("#searchResultsParent");
 
-function showSpinner() {
-    spinnerSmall.classList.remove("spinnerSmall");
-}
-function hideSpinner() {
-    spinnerSmall.classList.add("spinnerSmall");
-}
+// function showSpinner() {
+//     spinnerSmall.classList.remove("spinnerSmall");
+// }
+// function hideSpinner() {
+//     spinnerSmall.classList.add("spinnerSmall");
+// }
 // Will do something with the below function for one of the next milestones
 // searchBox.addEventListener('input', () => {
 //     searchInput = searchBox.value;
@@ -83,41 +83,61 @@ function resultsToHtmlList(companyObject) {
     hideSpinner();
 }
 
-searchButton.addEventListener('click', () => {
-    getApiResponse();
-});
+// searchButton.addEventListener('click', () => {
+//     getApiResponse();
+// });
 
-async function getApiResponse() {
-    showSpinner();
-    let searchInput = searchBox.value;
-    const searchUrl = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/search?query=${searchInput}&limit=10&exchange=NASDAQ`;
-    const response = await fetch(searchUrl);
-    const data = await response.json();
+// debounce version of button click event. 
+// Taken from https://www.geeksforgeeks.org/debouncing-in-javascript/#:~:text=Debouncing%20in%20JavaScript%20is%20a,is%20a%20single%20threaded%20language.
+
+// const debounce = (func, delay) => { 
+//     let debounceTimer 
+//     return function() { 
+//         const context = this
+//         const args = arguments 
+//             clearTimeout(debounceTimer) 
+//                 debounceTimer 
+//             = setTimeout(() => func.apply(context, args), delay) 
+//     } 
+// } 
+
+// searchButton.addEventListener('click', debounce(function() {
+//     console.log('Fires only every second');
+//     getApiResponse();
+// }, 1000));
+
+
+// async function getApiResponse() {
+//     showSpinner();
+//     let searchInput = searchBox.value;
+//     const searchUrl = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/search?query=${searchInput}&limit=10&exchange=NASDAQ`;
+//     const response = await fetch(searchUrl);
+//     const data = await response.json();
     
-    let companyObject = []; 
-    for(let x = 0; x < data.length; x++) {
-        companyObject[x] = {};
-        let symbol = data[x].symbol;
-        companyObject[x]['symbol'] = symbol;
+//     let companyObject = []; 
+//     for(let x = 0; x < data.length; x++) {
+//         companyObject[x] = {};
+//         let symbol = data[x].symbol;
+//         companyObject[x]['symbol'] = symbol;
 
-        try {
-            const companyEndpoint = 'https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/'
-            const compResponse = await fetch(companyEndpoint+symbol);
-            const compData = await compResponse.json();
-            companyObject[x]['companyName'] = compData.profile.companyName;
-            companyObject[x]['image'] = compData.profile.image;
-            companyObject[x]['changes'] = compData.profile.changes;
-        }
-        catch(err) {
-            console.error(`There is a problem accessing the data for company symbol "${symbol}" with >> ${err}`);
-            companyObject[x]['companyName'] = 'Not available';
-            companyObject[x]['image'] = "./images/bearbull_favicon.png";
-            companyObject[x]['changes'] = 'Not available';
-            continue   
-        }
-    }
-    resultsToHtmlList(companyObject);
-}
+//         try {
+//             const companyEndpoint = 'https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/'
+//             const compResponse = await fetch(companyEndpoint+symbol);
+//             const compData = await compResponse.json();
+//             companyObject[x]['companyName'] = compData.profile.companyName;
+//             companyObject[x]['image'] = compData.profile.image;
+//             companyObject[x]['changes'] = compData.profile.changes;
+//         }
+//         catch(err) {
+//             console.error(`There is a problem accessing the data for company symbol "${symbol}" with >> ${err}`);
+//             companyObject[x]['companyName'] = 'Not available';
+//             companyObject[x]['image'] = "./images/bearbull_favicon.png";
+//             companyObject[x]['changes'] = 'Not available';
+//             continue   
+//         }
+//     }
+//     resultsToHtmlList(companyObject);
+// }
 
 function brokenImageToDefault(image) {
     const defaultImage = './images/bearbull_favicon.png';

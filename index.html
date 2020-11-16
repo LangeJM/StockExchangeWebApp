@@ -16,31 +16,27 @@
   </head>
   <body>  
     
-    <div class="d-flex justify-content-center text-nowrap" id="marqueeText">
-      
-    </div>
+    <div id="marqueeText"></div>
 
-    <div class="d-flex justify-content-center py-3">
-        <div class="h1 mr-5">Search Nasdaq Stocks</div>
-      </div>
-      
-      <div class="d-flex justify-content-center">        
-          <input id="searchBox" class="form-control mr-sm-2 col-3" style="min-width: 250px; max-width: 350px;" type="text" placeholder="Search Input" aria-label="Search">
-          <button id="searchButton" class="btn btn-primary btn-rounded my-0 border" type="submit">Search</button>
-          <div id="spinnerSmall" class="ml-3 spinnerSmall spinner-border align-self-center" style="width: 1.75rem; height: 1.75rem" role="status"></div>       
-      </div>
-
-      <div class="d-flex justify-content-center col-11">        
-        <div id="searchResultsParent" class="pl-3 pt-3">            
-        </div> 
-    </div>
+    <div class="container">
+      <h2 class="my-3 text-center">Search Nasdaq Stocks</h2>      
+      <div id="searchParent"></div>
+      <div id="searchResultsParent" class="ml-5 d-flex w-75 align-items-center flex-column"></div>
+  </div>
   
-    <script src="./js/index.js"></script>
+    
     <script src="./js/marquee.js"></script>
+    <script src="./js/searchForm.js"></script>
+    <script src="./js/searchResult.js"></script>
+    
+
     <script>
       (async function () {
         const marquee = new Marquee(document.querySelector('#marqueeText'));
         marquee.createMarqueeText();
+        const searchForm = new SearchForm(document.querySelector('#searchParent'));
+        const searchResult = new SearchResult(document.querySelector('#searchParent'));
+        searchForm.getSearchTerm();
       })()
     </script>
     

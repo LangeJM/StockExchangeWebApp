@@ -12,6 +12,8 @@ class Marquee {
     async createMarqueeText() {
         const data = await this.getMajorIndexesApiResponse();
         const marqueeParentEl = this.marqueeParentEl;
+        marqueeParentEl.classList.add("d-flex", "justify-content-center", "text-nowrap");
+
         for (let i in data) {
             let newSymbolEl = document.createElement("div");
             newSymbolEl.classList.add("smallFont", "mr-1");
