@@ -4,8 +4,7 @@ class SearchResult { // I don't succeed to make this work with two different fil
     // } 
     //Constructor not accesible from static.. so I have to hardcode it inside the static method.
 
-    static async resultsToHtmlList(companyObject) { //I don't know how I can have an async method of class SearchForm access this methoid other than making both static... 
-        
+    static async resultsToHtmlList(companyObject, searchInput) { //I don't know how I can have an async method of class SearchForm access this methoid other than making both static... 
         const searchResultsParent = document.querySelector('#searchResultsParent');
         searchResultsParent.innerHTML = "";
     
@@ -44,7 +43,6 @@ class SearchResult { // I don't succeed to make this work with two different fil
             
             searchResultsParent.appendChild(childParent);
 
-    
             imgTag.src = image;
             imgTag.setAttribute("onerror", "SearchResult.brokenImageToDefault(this)");
             labelEl.appendChild(imgTag);
@@ -70,10 +68,21 @@ class SearchResult { // I don't succeed to make this work with two different fil
             childParent.appendChild(stockChangesEl);  
         }
         SearchForm.hideSpinner();
+        SearchResult.performMark(searchInput, SearchResult.markInstance);
     }
 
     static brokenImageToDefault(image) {
         const defaultImage = './images/bearbull_favicon.png';
         image.src = defaultImage;
+    }
+
+    static markInstance = new Mark(searchResultsParent)
+
+    static performMark(searchInput, markInstance) {
+        markInstance.unmark({
+            done: function(){
+            markInstance.mark(searchInput)
+            }
+        })
     }
 }
