@@ -49,7 +49,7 @@ function companyToHtml(data) {
         companyStockPriceChange.textContent = `(${data.profile.changes}%)`;
         companyStockPriceChange.style.color = "#ed2926";
     } else {
-        companyStockPriceChange.textContent = `(+${data.profile.changes}%)`;
+        companyStockPriceChange.textContent = '+'.concat(`(${data.profile.changes}%)`);
         companyStockPriceChange.style.color = "#27e359";
     }
     companyDescription.textContent = data.profile.description;

@@ -3,6 +3,7 @@ class SearchResult { // I don't succeed to make this work with two different fil
     //     this.searchResultsParent = searchResultsParent;
     // } 
     //Constructor not accesible from static.. so I have to hardcode it inside the static method.
+    static companies;
 
     static async resultsToHtmlList(companyObject, searchInput) { //I don't know how I can have an async method of class SearchForm access this methoid other than making both static... 
         const searchResultsParent = document.querySelector('#searchResultsParent');
@@ -16,38 +17,34 @@ class SearchResult { // I don't succeed to make this work with two different fil
             const symbol = companyObject[x].symbol;
             const image = companyObject[x].image;
             const changes = companyObject[x].changes;
-    
+
             let childParent = document.createElement("div");
-            childParent.classList.add("row", "align-items-center", "py-2", "searchResultsWidth", "border-bottom", "pl-3");
-            let nameEl = document.createElement("div");
-            let labelEl = document.createElement("div");
-                    
-            let symbolEl = document.createElement("div");
-            symbolEl.classList.add("smallFont");
-            let stockChangesEl = document.createElement("div");
-            stockChangesEl.classList.add("smallFont");
-            if (changes < 0) {
-                stockChangesEl.classList.add("negativeRedFont");
-                stockChangesEl.textContent = `(${changes})`;
-            } else if (changes === 'Not available') {
-                stockChangesEl.classList.add("notavailableFont");
-                stockChangesEl.textContent = `(${changes})`;
-            } else {
-                stockChangesEl.classList.add("posOrEqualGreenFont");
-                stockChangesEl.textContent = `(+${changes})`;
-            }
-    
-            let imgTag = document.createElement("img");
-            imgTag.classList.add("img-fluid", "imgResizeSmall");
-            let aTag = document.createElement("a");
-            
+            childParent.classList.add("row", "align-items-center", "py-2", "w-100", "pl-5");
             searchResultsParent.appendChild(childParent);
 
-            imgTag.src = image;
-            imgTag.setAttribute("onerror", "SearchResult.brokenImageToDefault(this)");
-            labelEl.appendChild(imgTag);
-            childParent.appendChild(labelEl);
-            
+            edgeColumnEl(childParent)
+            labelEl(image, childParent)
+            nameEl(companyName, childParent)
+            symbolEl(symbol, childParent)
+            stockChangesEl(changes, childParent)
+            // edgeColumnEl(childParent)
+            compareButtonEl(childParent,x)
+
+            let dividerEl = document.createElement("div");
+            dividerEl.classList.add("border-bottom", "dividerWidth");
+            searchResultsParent.appendChild(dividerEl);
+        }
+
+
+        function edgeColumnEl(childParent) {
+            const columnEl = document.createElement("div");
+            columnEl.classList.add("col-2");
+            childParent.appendChild(columnEl)
+        }
+
+        function nameEl(companyName, childParent, symbol) {
+            let nameEl = document.createElement("div");
+            let aTag = document.createElement("a");
             if (companyName === 'Not available') {
                 aTag.textContent = ` ${companyName} `;
                 aTag.classList.add("notavailableFont");
@@ -62,11 +59,51 @@ class SearchResult { // I don't succeed to make this work with two different fil
                 childParent.appendChild(nameEl);
                 nameEl.className = "bold-text px-3";
             }
-    
+        }
+
+        function labelEl(image, childParent) {
+            let labelEl = document.createElement("div");
+            let imgTag = document.createElement("img");
+            imgTag.classList.add("img-fluid", "imgResizeSmall");
+            imgTag.src = image;
+            imgTag.setAttribute("onerror", "SearchResult.brokenImageToDefault(this)");
+            labelEl.appendChild(imgTag);
+            childParent.appendChild(labelEl);
+        }
+        
+        function symbolEl(symbol, childParent) {
+            let symbolEl = document.createElement("div");
+            symbolEl.classList.add("smallFont");
             symbolEl.textContent = `(${symbol})`;
             childParent.appendChild(symbolEl);
-            childParent.appendChild(stockChangesEl);  
         }
+        
+        function stockChangesEl(changes, childParent) {
+            let stockChangesEl = document.createElement("div");
+            stockChangesEl.classList.add("smallFont");
+            if (changes < 0) {
+                stockChangesEl.classList.add("negativeRedFont");
+                stockChangesEl.textContent = `(${changes})`;
+            } else if (changes === 'Not available') {
+                stockChangesEl.classList.add("notavailableFont");
+                stockChangesEl.textContent = `(${changes})`;
+            } else {
+                stockChangesEl.classList.add("posOrEqualGreenFont");
+                stockChangesEl.textContent = `(+${changes})`;
+            }
+            childParent.appendChild(stockChangesEl);
+        }
+
+        function compareButtonEl(childParent,x) {
+            let compareButtonEl = document.createElement("button");
+            compareButtonEl.setAttribute("type", "button");
+            compareButtonEl.setAttribute("onclick", "SearchResult.getButtoninfo(event)");
+            compareButtonEl.classList.add("btn", "btn-outline-info", "btn-sm", "ml-auto", "mr-4", `indexRelCompanyObject${x}`);
+            compareButtonEl.textContent = "Compare";
+            childParent.appendChild(compareButtonEl)
+        }
+
+        
         SearchForm.hideSpinner();
         // SearchResult.highlightSearchTerm(searchInput, searchResultsParent);
         SearchResult.performMark(searchInput, SearchResult.markInstance);
@@ -91,4 +128,13 @@ class SearchResult { // I don't succeed to make this work with two different fil
             }
         })
     }
+
+    static getButtoninfo(event) {
+        let target = event.target;
+        const relIndexCompanies = parseInt(target.className.split('indexRelCompanyObject')[1]); //I was looking for a direct way to get the parent-parent NodeIndex, but so far didn't succeed.
+        console.log(this.companies[relIndexCompanies]);
+    }
+
+
+
 }

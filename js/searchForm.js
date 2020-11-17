@@ -32,7 +32,9 @@ class SearchForm {
                 continue   
             }
         }
+        SearchResult.companies = companyObject;
         SearchResult.resultsToHtmlList(companyObject, searchInput)
+        
     }
 
     static showSpinner() {

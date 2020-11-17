@@ -40,6 +40,10 @@
     width: 33rem;
 }
 
+.dividerWidth {
+    width: 60%;
+}
+
 #marqueeText {
  color: blue;
  width: 100%;
