@@ -68,6 +68,7 @@ class SearchResult { // I don't succeed to make this work with two different fil
             childParent.appendChild(stockChangesEl);  
         }
         SearchForm.hideSpinner();
+        // SearchResult.highlightSearchTerm(searchInput, searchResultsParent);
         SearchResult.performMark(searchInput, SearchResult.markInstance);
     }
 
@@ -76,8 +77,13 @@ class SearchResult { // I don't succeed to make this work with two different fil
         image.src = defaultImage;
     }
 
-    static markInstance = new Mark(searchResultsParent)
+    // static highlightSearchTerm(searchInput, searchResultsParent) {
+    //     const regEx = new RegExp("(?<!=.)(?<!=.{2})(?<!=.{3})(?<!=.{4})abc(?![A-Za-z0-9_]{0,}.jpg)(?![A-Za-z0-9_]{0,}.png)(?![A-Za-z0-9_]{0,}.jpeg)", "ig"); // I need to find a regex that only matches those searchInput strings that are not preceeded (range of pos) by "=" or followed by image file endings. This prevents links within the innerHTML from being modified and thus broken. Still looking fo a good solution for the first part. Until then using library.
+    //     const modifiedText =  searchResultsParent.innerHTML.replaceAll(regEx, '<span class="highlighter">$&</span>');
+    //     searchResultsParent.innerHTML = modifiedText;
+    // }
 
+    static markInstance = new Mark(searchResultsParent)
     static performMark(searchInput, markInstance) {
         markInstance.unmark({
             done: function(){

@@ -77,9 +77,13 @@
  }
 }
 
-mark{
-    background: rgba(238, 255, 0, 0.384);
+.highlighter {
+    background: rgba(238, 255, 0, 0.459);
     color: black;
-    padding: 0;
+    padding: 0!important;
+}
+mark {
+    background: rgba(238, 255, 0, 0.459);
+    padding: 0!important;
 }
 
