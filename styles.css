@@ -1,93 +1,99 @@
 .spinnerSmall {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .spinnerLarge {
-    display:none;
+  display: none;
 }
 
 .hideElements {
-    display:none;
+  display: none;
 }
 
 .smallFont {
-    font-size: 0.75rem;
+  font-size: 0.75rem;
 }
 
 .imgResizeSmall {
-    width: 1.5rem!important;
-    height: auto;
+  width: 1.5rem !important;
+  height: auto;
 }
 
 .imgResizeNormal {
-    width: 5rem!important;
-    height: auto;
+  width: 5rem !important;
+  height: auto;
 }
 
 .negativeRedFont {
-    color: #ed2926;
+  color: #ed2926;
 }
 
 .posOrEqualGreenFont {
-    color: #27e359;
+  color: #27e359;
 }
 
 .notavailableFont {
-    color: grey!important;
+  color: grey !important;
 }
 
 .searchResultsWidth {
-    width: 33rem;
+  width: 33rem;
 }
 
 .dividerWidth {
-    width: 60%;
+  width: 60%;
 }
 
 #marqueeText {
- color: blue;
- width: 100%;
- height: 1.5rem;
- margin: 0;
- line-height: 1rem;
- text-align: center;
- 
- 
- /* I took code from here (https://colibriwp.com/blog/scrolling-text/) and modified it. Stil WIP. 
+  color: blue;
+  width: 100%;
+  height: 1.5rem;
+  margin: 0;
+  line-height: 1rem;
+  text-align: center;
+
+  /* I took code from here (https://colibriwp.com/blog/scrolling-text/) and modified it. Stil WIP. 
  /* Apply animation to this element */
- -moz-animation: marqueeText 20s linear infinite;
- -webkit-animation: marqueeText 20s linear infinite;
- animation: marqueeText 20s linear infinite;
+  -moz-animation: marqueeText 20s linear infinite;
+  -webkit-animation: marqueeText 20s linear infinite;
+  animation: marqueeText 20s linear infinite;
 }
 /* Move it (define the animation) */
 @-moz-keyframes marqueeText {
- 0%   { -moz-transform: translateX(100%); } 
- 100% { -moz-transform: translateX(-100%); }
+  0% {
+    -moz-transform: translateX(100%);
+  }
+  100% {
+    -moz-transform: translateX(-100%);
+  }
 }
 @-webkit-keyframes marqueeText {
- 0%   { -webkit-transform: translateX(100%); }
- 100% { -webkit-transform: translateX(-100%); }
+  0% {
+    -webkit-transform: translateX(100%);
+  }
+  100% {
+    -webkit-transform: translateX(-100%);
+  }
 }
 @keyframes marqueeText {
- 0%   { 
- -moz-transform: translateX(100%); /* Firefox bug fix */
- -webkit-transform: translateX(100%); /* Firefox bug fix */
- transform: translateX(100%); 
- }
- 100% { 
- -moz-transform: translateX(-100%); /* Firefox bug fix */
- -webkit-transform: translateX(-100%); /* Firefox bug fix */
- transform: translateX(-100%); 
- }
+  0% {
+    -moz-transform: translateX(100%); /* Firefox bug fix */
+    -webkit-transform: translateX(100%); /* Firefox bug fix */
+    transform: translateX(100%);
+  }
+  100% {
+    -moz-transform: translateX(-100%); /* Firefox bug fix */
+    -webkit-transform: translateX(-100%); /* Firefox bug fix */
+    transform: translateX(-100%);
+  }
 }
 
 .highlighter {
-    background: rgba(238, 255, 0, 0.459);
-    color: black;
-    padding: 0!important;
+  background: rgba(238, 255, 0, 0.459);
+  color: black;
+  padding: 0 !important;
 }
 mark {
-    background: rgba(238, 255, 0, 0.459);
-    padding: 0!important;
+  background: rgba(238, 255, 0, 0.459);
+  padding: 0 !important;
 }
-

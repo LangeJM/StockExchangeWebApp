@@ -22,85 +22,18 @@ class SearchResult { // I don't succeed to make this work with two different fil
             childParent.classList.add("row", "align-items-center", "py-2", "w-100", "pl-5");
             searchResultsParent.appendChild(childParent);
 
-            edgeColumnEl(childParent)
-            labelEl(image, childParent)
-            nameEl(companyName, childParent)
-            symbolEl(symbol, childParent)
-            stockChangesEl(changes, childParent)
+            
+            this.edgeColumnEl(childParent)
+            this.labelEl(image, childParent)
+            this.nameEl(companyName, childParent, symbol)
+            this.symbolEl(symbol, childParent)
+            this.stockChangesEl(changes, childParent)
             // edgeColumnEl(childParent)
-            compareButtonEl(childParent,x)
+            this.compareButtonEl(childParent,x)
 
             let dividerEl = document.createElement("div");
             dividerEl.classList.add("border-bottom", "dividerWidth");
             searchResultsParent.appendChild(dividerEl);
-        }
-
-
-        function edgeColumnEl(childParent) {
-            const columnEl = document.createElement("div");
-            columnEl.classList.add("col-2");
-            childParent.appendChild(columnEl)
-        }
-
-        function nameEl(companyName, childParent, symbol) {
-            let nameEl = document.createElement("div");
-            let aTag = document.createElement("a");
-            if (companyName === 'Not available') {
-                aTag.textContent = ` ${companyName} `;
-                aTag.classList.add("notavailableFont");
-                nameEl.appendChild(aTag);
-                childParent.appendChild(nameEl);
-                nameEl.className = "bold-text px-3";
-                
-            } else {
-                aTag.setAttribute('href','./company.html?symbol=' + symbol);
-                aTag.textContent = ` ${companyName} `;
-                nameEl.appendChild(aTag);
-                childParent.appendChild(nameEl);
-                nameEl.className = "bold-text px-3";
-            }
-        }
-
-        function labelEl(image, childParent) {
-            let labelEl = document.createElement("div");
-            let imgTag = document.createElement("img");
-            imgTag.classList.add("img-fluid", "imgResizeSmall");
-            imgTag.src = image;
-            imgTag.setAttribute("onerror", "SearchResult.brokenImageToDefault(this)");
-            labelEl.appendChild(imgTag);
-            childParent.appendChild(labelEl);
-        }
-        
-        function symbolEl(symbol, childParent) {
-            let symbolEl = document.createElement("div");
-            symbolEl.classList.add("smallFont");
-            symbolEl.textContent = `(${symbol})`;
-            childParent.appendChild(symbolEl);
-        }
-        
-        function stockChangesEl(changes, childParent) {
-            let stockChangesEl = document.createElement("div");
-            stockChangesEl.classList.add("smallFont");
-            if (changes < 0) {
-                stockChangesEl.classList.add("negativeRedFont");
-                stockChangesEl.textContent = `(${changes})`;
-            } else if (changes === 'Not available') {
-                stockChangesEl.classList.add("notavailableFont");
-                stockChangesEl.textContent = `(${changes})`;
-            } else {
-                stockChangesEl.classList.add("posOrEqualGreenFont");
-                stockChangesEl.textContent = `(+${changes})`;
-            }
-            childParent.appendChild(stockChangesEl);
-        }
-
-        function compareButtonEl(childParent,x) {
-            let compareButtonEl = document.createElement("button");
-            compareButtonEl.setAttribute("type", "button");
-            compareButtonEl.setAttribute("onclick", "SearchResult.getButtoninfo(event)");
-            compareButtonEl.classList.add("btn", "btn-outline-info", "btn-sm", "ml-auto", "mr-4", `indexRelCompanyObject${x}`);
-            compareButtonEl.textContent = "Compare";
-            childParent.appendChild(compareButtonEl)
         }
 
         
@@ -133,8 +66,89 @@ class SearchResult { // I don't succeed to make this work with two different fil
         let target = event.target;
         const relIndexCompanies = parseInt(target.className.split('indexRelCompanyObject')[1]); //I was looking for a direct way to get the parent-parent NodeIndex, but so far didn't succeed.
         console.log(this.companies[relIndexCompanies]);
+        if (target.classList.contains("btn-outline-info")) {
+            target.classList.add("btn-info");
+            target.classList.remove("btn-outline-info");
+            target.style.color = "#ffffff";
+            this.holdCompareCount +=1;
+        } else {
+            target.classList.add("btn-outline-info");
+            target.classList.remove("btn-info");
+            target.style.color = "#17a2b8";
+            this.holdCompareCount -=1;
+        }
+        console.log(this.holdCompareCount);
     }
 
+    static holdCompareCount = 0;
+    static holdCompareCompanies = []; 
 
+
+    static edgeColumnEl(childParent) {
+        const columnEl = document.createElement("div");
+        columnEl.classList.add("col-2");
+        childParent.appendChild(columnEl)
+    }
+
+    static nameEl(companyName, childParent, symbol) {
+        let nameEl = document.createElement("div");
+        let aTag = document.createElement("a");
+        if (companyName === 'Not available') {
+            aTag.textContent = ` ${companyName} `;
+            aTag.classList.add("notavailableFont");
+            nameEl.appendChild(aTag);
+            childParent.appendChild(nameEl);
+            nameEl.className = "bold-text px-3";
+            
+        } else {
+            aTag.setAttribute('href',`./company.html?symbol=${symbol}`);
+            aTag.textContent = ` ${companyName} `;
+            nameEl.appendChild(aTag);
+            childParent.appendChild(nameEl);
+            nameEl.className = "bold-text px-3";
+        }
+    }
+
+    static labelEl(image, childParent) {
+        let labelEl = document.createElement("div");
+        let imgTag = document.createElement("img");
+        imgTag.classList.add("img-fluid", "imgResizeSmall");
+        imgTag.src = image;
+        imgTag.setAttribute("onerror", "SearchResult.brokenImageToDefault(this)");
+        labelEl.appendChild(imgTag);
+        childParent.appendChild(labelEl);
+    }
+    
+    static symbolEl(symbol, childParent) {
+        let symbolEl = document.createElement("div");
+        symbolEl.classList.add("smallFont");
+        symbolEl.textContent = `(${symbol})`;
+        childParent.appendChild(symbolEl);
+    }
+    
+    static stockChangesEl(changes, childParent) {
+        let stockChangesEl = document.createElement("div");
+        stockChangesEl.classList.add("smallFont");
+        if (changes < 0) {
+            stockChangesEl.classList.add("negativeRedFont");
+            stockChangesEl.textContent = `(${changes})`;
+        } else if (changes === 'Not available') {
+            stockChangesEl.classList.add("notavailableFont");
+            stockChangesEl.textContent = `(${changes})`;
+        } else {
+            stockChangesEl.classList.add("posOrEqualGreenFont");
+            stockChangesEl.textContent = `(+${changes})`;
+        }
+        childParent.appendChild(stockChangesEl);
+    }
+
+    static compareButtonEl(childParent,x) {
+        let compareButtonEl = document.createElement("button");
+        compareButtonEl.setAttribute("type", "button");
+        compareButtonEl.setAttribute("onclick", "SearchResult.getButtoninfo(event)");
+        compareButtonEl.classList.add("btn", "btn-outline-info", "btn-sm", "ml-auto", "mr-4", `indexRelCompanyObject${x}`);
+        compareButtonEl.textContent = "Compare";
+        childParent.appendChild(compareButtonEl)
+    }
 
 }

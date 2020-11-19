@@ -22,49 +22,23 @@
 
 
   <div class="container" id="superContainer">
-    <div id="spinnerLarge" class="ml-3 spinnerLarge spinner-border align-self-center" style="width: 4rem; height: 4rem"
-      role="status"></div>
-
-    <div class="container elementsToHide p-3 justify-content-center border rounded mt-3">
-
-      <div class="row h4">
-        <div class="col-2 align-self-center"><img id="companyLabel" src=""></div>
-        <div id="companyNameSymbolLink" class="align-self-center col-10"></div>
-      </div>
-
-      <div class="row pt-3">
-        <div class="col-2 align-self-center" id="companyStockPrice"></div>
-        <div id="companyStockPriceChange" class="align-self-center col-10"></div>
-      </div>
-
-      <div class="row pt-3">
-        <div class="col-9 align-self-center small" id="companyDescription"></div>
-        <div id="" class="align-self-center col-10"></div>
-      </div>
-
-      <div class="row pt-3">
-
-      </div>
-    </div>
-
-    <div class="container elementsToHide p-3 justify-content-center border rounded mt-3">
-      <canvas id="companyStocksHistory"></canvas>
-    </div>
-
   </div>
-
-  <!-- <div class="d-flex">
-        <div class="p-2">Flex item</div>
-        <div class="p-2">Flex item</div>
-        <div class="ml-auto p-2">Flex item</div>
-      </div> -->
-
-
 
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="./js/company.js"></script>
+  <script>
+    (async function() {
+      const urlParams = new URLSearchParams(location.search);
+      const symbol = urlParams.toString().split('=')[1];
+      const compInfo = new CompanyInfo(document.getElementById('superContainer'), symbol);
+      await compInfo.getCompany();
+      await compInfo.getStocksHistory();
+    })
+    ();
+
+  </script>
 
 </body>
 
