@@ -33,8 +33,7 @@ class SearchForm {
             }
         }
         SearchResult.companies = companyObject;
-        SearchResult.resultsToHtmlList(companyObject, searchInput)
-        
+        SearchResult.resultsToHtmlList(companyObject, searchInput)  
     }
 
     static showSpinner() {
@@ -74,38 +73,7 @@ class SearchForm {
 
     createHtml() {
         this.searchParent.classList.add("d-flex", "justify-content-center");
-        
-        const columnEl = document.createElement("div");
-        columnEl.classList.add("col-2");
-
-        const columnEl2 = document.createElement("div");
-        columnEl2.classList.add("col-2");
-        
-        const searchBox = document.createElement("input");
-        searchBox.classList.add("form-control", "mr-sm-2", "col-6");
-        searchBox.setAttribute("type", "text");
-        searchBox.setAttribute("aria-label", "Search");
-        searchBox.setAttribute("placeholder", "Search Input");
-        searchBox.setAttribute("id", "searchBox");
-
-        const button = document.createElement("button");
-        button.classList.add("btn", "btn-primary", "btn-rounded", "my-0", "border", "col-1");
-        button.setAttribute("style", "min-width: 4.5rem");
-        button.setAttribute("type", "submit");
-        button.textContent = "Search";
-        button.setAttribute("id", "searchButton");
-
-        const spinnerSmall = document.createElement("button");
-        spinnerSmall.classList.add("ml-3", "spinnerSmall", "spinner-border", "align-self-center");
-        spinnerSmall.setAttribute("style", "width: 1.75rem; height: 1.75rem; min-width: 1.75rem;");
-        spinnerSmall.setAttribute("role", "status");
-        spinnerSmall.setAttribute("id", "spinnerSmall");
-
-        this.searchParent.appendChild(columnEl);
-        this.searchParent.appendChild(searchBox);
-        this.searchParent.appendChild(button);
-        this.searchParent.appendChild(spinnerSmall);
-        this.searchParent.appendChild(columnEl2);
+        this.searchParent.innerHTML = `<div class="col-2"></div><input class="form-control mr-sm-2 col-6" type="text" aria-label="Search" placeholder="Search Input" id="searchBox"><button class="btn btn-primary btn-rounded my-0 border col-1" style="min-width: 4.5rem" type="submit" id="searchButton">Search</button><button class="btn btn-info btn-rounded my-0 border col-1" style="display: none" type="submit" id="compareButton"></button><button class="ml-3 spinnerSmall spinner-border align-self-center" style="width: 1.75rem; height: 1.75rem; min-width: 1.75rem;" role="status" id="spinnerSmall"></button><div class="col-2"></div>`
     }
 }
 

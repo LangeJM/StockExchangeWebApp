@@ -2,7 +2,7 @@ class SearchResult { // I don't succeed to make this work with two different fil
     // constructor(searchResultsParent) {
     //     this.searchResultsParent = searchResultsParent;
     // } 
-    //Constructor not accesible from static.. so I have to hardcode it inside the static method.
+    //Constructor not accessible from static.. so I have to hardcode it inside the static method.
     static companies;
 
     static async resultsToHtmlList(companyObject, searchInput) { //I don't know how I can have an async method of class SearchForm access this methoid other than making both static... 
@@ -28,15 +28,16 @@ class SearchResult { // I don't succeed to make this work with two different fil
             this.nameEl(companyName, childParent, symbol)
             this.symbolEl(symbol, childParent)
             this.stockChangesEl(changes, childParent)
-            // edgeColumnEl(childParent)
             this.compareButtonEl(childParent,x)
 
             let dividerEl = document.createElement("div");
             dividerEl.classList.add("border-bottom", "dividerWidth");
             searchResultsParent.appendChild(dividerEl);
         }
+        this.holdCompareCompanies = [];
+        this.holdCompareCount = 0;
+        this.resetButtons();
 
-        
         SearchForm.hideSpinner();
         // SearchResult.highlightSearchTerm(searchInput, searchResultsParent);
         SearchResult.performMark(searchInput, SearchResult.markInstance);
@@ -62,27 +63,52 @@ class SearchResult { // I don't succeed to make this work with two different fil
         })
     }
 
+    static searchButton = document.querySelector('#searchButton');
+    static compareButton = document.querySelector('#compareButton');
+
     static getButtoninfo(event) {
         let target = event.target;
-        const relIndexCompanies = parseInt(target.className.split('indexRelCompanyObject')[1]); //I was looking for a direct way to get the parent-parent NodeIndex, but so far didn't succeed.
-        console.log(this.companies[relIndexCompanies]);
+        const compareCompany = this.companies[parseInt(target.className.split('indexRelCompanyObject')[1])]; //I was looking for a direct way to get the parent-parent NodeIndex, but so far didn't succeed.
+        
         if (target.classList.contains("btn-outline-info")) {
             target.classList.add("btn-info");
             target.classList.remove("btn-outline-info");
             target.style.color = "#ffffff";
-            this.holdCompareCount +=1;
+            this.holdCompareCount += 1;
+            this.holdCompareCompanies.push(compareCompany);
+            
         } else {
             target.classList.add("btn-outline-info");
             target.classList.remove("btn-info");
             target.style.color = "#17a2b8";
-            this.holdCompareCount -=1;
+            this.holdCompareCount -= 1;
+            for (let i = this.holdCompareCompanies.length - 1; i >= 0; --i) {
+                if (this.holdCompareCompanies[i].symbol == compareCompany.symbol) {
+                    this.holdCompareCompanies.splice(i,1);
+                }
+            }
         }
         console.log(this.holdCompareCount);
+        console.log(this.holdCompareCompanies);
+        if (this.holdCompareCount > 1) {
+            compareButton.textContent = `Compare ${this.holdCompareCount}`;
+            searchButton.style.display = 'none';
+            compareButton.style.display = 'block';
+            compareButton.setAttribute("style", "font-size: smaller");
+
+        } else if (this.holdCompareCount <= 1) {
+            compareButton.style.display = 'none';
+            searchButton.style.display = 'block';
+        }
+    }
+
+    static resetButtons() {
+        compareButton.style.display = 'none';
+        searchButton.style.display = 'block';
     }
 
     static holdCompareCount = 0;
     static holdCompareCompanies = []; 
-
 
     static edgeColumnEl(childParent) {
         const columnEl = document.createElement("div");
@@ -150,5 +176,4 @@ class SearchResult { // I don't succeed to make this work with two different fil
         compareButtonEl.textContent = "Compare";
         childParent.appendChild(compareButtonEl)
     }
-
 }

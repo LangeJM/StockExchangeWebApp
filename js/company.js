@@ -6,33 +6,26 @@ class CompanyInfo {
         <div id="spinnerLarge" class="ml-3 spinner-border align-self-center spinnerLarge" style="width: 4rem; height: 4rem" role="status"></div>
     
         <div class="container elementsToHide p-3 justify-content-center border rounded mt-3">
-    
           <div class="row h4">
             <div class="col-2 align-self-center"><img id="companyLabel" src="" class="img-fluid imgResizeNormal"></div>
             <div id="companyNameSymbolLink" class="align-self-center col-10"><a href=""></a></div>
           </div>
-    
           <div class="row pt-3">
             <div class="col-2 align-self-center" id="companyStockPrice"></div>
             <div id="companyStockPriceChange" class="align-self-center col-10" style="color: rgb(237, 41, 38);"></div>
           </div>
-    
           <div class="row pt-3">
             <div class="col-9 align-self-center small" id="companyDescription"></div>
             <div id="" class="align-self-center col-10"></div>
           </div>
-    
           <div class="row pt-3">
-    
           </div>
         </div>
-    
         <div class="container elementsToHide p-3 justify-content-center border rounded mt-3"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
           <canvas id="companyStocksHistory" style="display: block; height: 447px; width: 895px;" height="491" width="984" class="chartjs-render-monitor"></canvas>
         </div>`;
         this.createElVars()
         this.showSpinnerLarge();
-
     }
 
     createElVars() {
@@ -47,8 +40,6 @@ class CompanyInfo {
         this.companyEndpoint = 'https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/'
         this.companyRequestUrl = this.companyEndpoint + this.symbol;
     }
-
-
 
     showSpinnerLarge() {
         this.spinnerLarge.classList.remove("spinnerLarge");
