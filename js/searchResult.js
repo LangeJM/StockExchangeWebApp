@@ -34,9 +34,9 @@ class SearchResult { // I don't succeed to make this work with two different fil
             dividerEl.classList.add("border-bottom", "dividerWidth");
             searchResultsParent.appendChild(dividerEl);
         }
-        this.holdCompareCompanies = [];
-        this.holdCompareCount = 0;
-        this.resetButtons();
+        CompareCompanies.holdCompareCompanies = [];
+        CompareCompanies.holdCompareCount = 0;
+        CompareCompanies.resetButtons();
 
         SearchForm.hideSpinner();
         // SearchResult.highlightSearchTerm(searchInput, searchResultsParent);
@@ -62,53 +62,6 @@ class SearchResult { // I don't succeed to make this work with two different fil
             }
         })
     }
-
-    static searchButton = document.querySelector('#searchButton');
-    static compareButton = document.querySelector('#compareButton');
-
-    static getButtoninfo(event) {
-        let target = event.target;
-        const compareCompany = this.companies[parseInt(target.className.split('indexRelCompanyObject')[1])]; //I was looking for a direct way to get the parent-parent NodeIndex, but so far didn't succeed.
-        
-        if (target.classList.contains("btn-outline-info")) {
-            target.classList.add("btn-info");
-            target.classList.remove("btn-outline-info");
-            target.style.color = "#ffffff";
-            this.holdCompareCount += 1;
-            this.holdCompareCompanies.push(compareCompany);
-            
-        } else {
-            target.classList.add("btn-outline-info");
-            target.classList.remove("btn-info");
-            target.style.color = "#17a2b8";
-            this.holdCompareCount -= 1;
-            for (let i = this.holdCompareCompanies.length - 1; i >= 0; --i) {
-                if (this.holdCompareCompanies[i].symbol == compareCompany.symbol) {
-                    this.holdCompareCompanies.splice(i,1);
-                }
-            }
-        }
-        console.log(this.holdCompareCount);
-        console.log(this.holdCompareCompanies);
-        if (this.holdCompareCount > 1) {
-            compareButton.textContent = `Compare ${this.holdCompareCount}`;
-            searchButton.style.display = 'none';
-            compareButton.style.display = 'block';
-            compareButton.setAttribute("style", "font-size: smaller");
-
-        } else if (this.holdCompareCount <= 1) {
-            compareButton.style.display = 'none';
-            searchButton.style.display = 'block';
-        }
-    }
-
-    static resetButtons() {
-        compareButton.style.display = 'none';
-        searchButton.style.display = 'block';
-    }
-
-    static holdCompareCount = 0;
-    static holdCompareCompanies = []; 
 
     static edgeColumnEl(childParent) {
         const columnEl = document.createElement("div");
@@ -171,9 +124,61 @@ class SearchResult { // I don't succeed to make this work with two different fil
     static compareButtonEl(childParent,x) {
         let compareButtonEl = document.createElement("button");
         compareButtonEl.setAttribute("type", "button");
-        compareButtonEl.setAttribute("onclick", "SearchResult.getButtoninfo(event)");
+        compareButtonEl.setAttribute("onclick", "CompareCompanies.getButtoninfo(event)");
         compareButtonEl.classList.add("btn", "btn-outline-info", "btn-sm", "ml-auto", "mr-4", `indexRelCompanyObject${x}`);
         compareButtonEl.textContent = "Compare";
         childParent.appendChild(compareButtonEl)
+    }
+}
+
+
+class CompareCompanies {
+    
+    static holdCompareCount = 0;
+    static holdCompareCompanies = []; 
+
+    static resetButtons() {
+    compareButton.style.display = 'none';
+    searchButton.style.display = 'block';
+    }   
+
+    static searchButton = document.querySelector('#searchButton');
+    static compareButton = document.querySelector('#compareButton');
+
+    static getButtoninfo(event) {
+        let target = event.target;
+        const compareCompany = SearchResult.companies[parseInt(target.className.split('indexRelCompanyObject')[1])]; //I was looking for a direct way to get the parent-parent NodeIndex, but so far didn't succeed.
+        
+        if (target.classList.contains("btn-outline-info")) {
+            target.classList.add("btn-info");
+            target.classList.remove("btn-outline-info");
+            target.style.color = "#ffffff";
+            this.holdCompareCount += 1;
+            this.holdCompareCompanies.push(compareCompany);
+            
+        } else {
+            target.classList.remove("btn-info");
+            target.classList.add("btn-outline-info");
+            target.style.color = "";
+            this.holdCompareCount -= 1;
+            for (let i = this.holdCompareCompanies.length - 1; i >= 0; --i) {
+                if (this.holdCompareCompanies[i].symbol == compareCompany.symbol) {
+                    this.holdCompareCompanies.splice(i,1);
+                }
+            }
+        }
+        console.log(this.holdCompareCount);
+        console.log(this.holdCompareCompanies);
+        if (this.holdCompareCount > 1) {
+            compareButton.textContent = `Compare ${this.holdCompareCount}`;
+            searchButton.style.display = 'none';
+            compareButton.style.display = 'block';
+            compareButton.setAttribute("style", "font-size: smaller");
+            
+
+        } else if (this.holdCompareCount <= 1) {
+            compareButton.style.display = 'none';
+            searchButton.style.display = 'block';
+        }
     }
 }
