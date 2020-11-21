@@ -135,7 +135,8 @@ class SearchResult { // I don't succeed to make this work with two different fil
 class CompareCompanies {
     
     static holdCompareCount = 0;
-    static holdCompareCompanies = []; 
+    static holdCompareCompanies = [];
+    static holdCompareCompaniesSymbols = [];
 
     static resetButtons() {
     compareButton.style.display = 'none';
@@ -155,6 +156,7 @@ class CompareCompanies {
             target.style.color = "#ffffff";
             this.holdCompareCount += 1;
             this.holdCompareCompanies.push(compareCompany);
+            this.holdCompareCompaniesSymbols.push(compareCompany.symbol);
             
         } else {
             target.classList.remove("btn-info");
@@ -163,22 +165,34 @@ class CompareCompanies {
             this.holdCompareCount -= 1;
             for (let i = this.holdCompareCompanies.length - 1; i >= 0; --i) {
                 if (this.holdCompareCompanies[i].symbol == compareCompany.symbol) {
-                    this.holdCompareCompanies.splice(i,1);
+                    this.holdCompareCompanies.splice(i, 1);
+                    this.holdCompareCompaniesSymbols.splice(i, 1);
                 }
             }
         }
         console.log(this.holdCompareCount);
         console.log(this.holdCompareCompanies);
+        console.log(this.holdCompareCompaniesSymbols);
+        
+
+
         if (this.holdCompareCount > 1) {
             compareButton.textContent = `Compare ${this.holdCompareCount}`;
             searchButton.style.display = 'none';
             compareButton.style.display = 'block';
             compareButton.setAttribute("style", "font-size: smaller");
+            compareButton.setAttribute("onclick", "CompareCompanies.comparePageRedirect()");
+            compareButton.setAttribute("value", "Go to company comparison page");
             
 
         } else if (this.holdCompareCount <= 1) {
             compareButton.style.display = 'none';
             searchButton.style.display = 'block';
+            compareButton.setAttribute("onclick", "location.href=''");
+            compareButton.setAttribute("value", "Go to company comparison page");
         }
+    }
+    static comparePageRedirect() {
+        window.location.href = `./compare.html?symbols=${this.holdCompareCompaniesSymbols.join()}`
     }
 }

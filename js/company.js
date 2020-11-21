@@ -2,6 +2,12 @@ class CompanyInfo {
     constructor (superContainer, symbol){
         this.superContainer = superContainer;
         this.symbol = symbol;
+        // this.createHtml();
+        // this.createElVars();
+        // this.showSpinnerLarge();
+    }
+
+    createHtml() {
         this.superContainer.innerHTML = `
         <div id="spinnerLarge" class="ml-3 spinner-border align-self-center spinnerLarge" style="width: 4rem; height: 4rem" role="status"></div>
     
@@ -24,10 +30,7 @@ class CompanyInfo {
         <div class="container elementsToHide p-3 justify-content-center border rounded mt-3"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
           <canvas id="companyStocksHistory" style="display: block; height: 447px; width: 895px;" height="491" width="984" class="chartjs-render-monitor"></canvas>
         </div>`;
-        this.createElVars()
-        this.showSpinnerLarge();
-    }
-
+    } 
     createElVars() {
         this.presentCompanyInfo = document.querySelector('#companyInfo');
         this.companyStocksHistory = document.getElementById('companyStocksHistory').getContext('2d');
@@ -95,6 +98,7 @@ class CompanyInfo {
 
         let changedKeys = JSON.parse(JSON.stringify(data).split("date").join("x"));
         changedKeys = JSON.parse(JSON.stringify(changedKeys).split("close").join("y"));
+        console.log(changedKeys)
         
         const stocksHistory = {
         label: 'Stock Price History (in USD)',
@@ -116,11 +120,4 @@ class CompanyInfo {
         this.hideSpinnerLarge();
     }
 
-    // onload = (event) => { //prev: window.onload = (event)
-    //     showSpinnerLarge();
-    //     if (companyRequestUrl) {
-    //         getCompany(companyRequestUrl);
-    //     } else {alert('no url found')}
-    //     getStocksHistory();
-    // };
 }

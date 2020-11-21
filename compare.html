@@ -21,23 +21,20 @@
 <body>
 
 
-  <div class="container" id="superContainer">
+  <div class="d-flex" id="companiesFrameContainer">
   </div>
 
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="./js/company.js"></script>
+  <script src="./js/compare.js"></script>
   <script>
     (async function() {
       const urlParams = new URLSearchParams(location.search);
-      const symbol = urlParams.toString().split('=')[1];
-      const compInfo = new CompanyInfo(document.getElementById('superContainer'), symbol);
-      compInfo.createHtml();
-      compInfo.createElVars();
-      compInfo.showSpinnerLarge();
-      await compInfo.getCompany();
-      await compInfo.getStocksHistory();
+      const symbols = urlParams.toString().split('=')[1].split("%2C");
+      const compareInfo = new CompareInfo(document.getElementById('companiesFrameContainer'), symbols);
+      compareInfo.renderCompanyComparison(symbols);
     })
     ();
 

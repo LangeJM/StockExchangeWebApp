@@ -73,7 +73,7 @@ class SearchForm {
 
     createHtml() {
         this.searchParent.classList.add("d-flex", "justify-content-center");
-        this.searchParent.innerHTML = `<div class="col-2"></div><input class="form-control mr-sm-2 col-6" type="text" aria-label="Search" placeholder="Search Input" id="searchBox"><button class="btn btn-primary btn-rounded my-0 border col-1" style="min-width: 4.5rem" type="submit" id="searchButton">Search</button><button class="btn btn-info btn-rounded my-0 border col-1" style="display: none" type="submit" id="compareButton"></button><button class="ml-3 spinnerSmall spinner-border align-self-center" style="width: 1.75rem; height: 1.75rem; min-width: 1.75rem;" role="status" id="spinnerSmall"></button><div class="col-2"></div>`
+        this.searchParent.innerHTML = `<div class="col-2"></div><input class="form-control mr-sm-2 col-6" type="text" aria-label="Search" placeholder="Search Input" id="searchBox"><button class="btn btn-primary btn-rounded my-0 border col-1" style="min-width: 4.5rem" type="submit" id="searchButton">Search</button><button class="btn btn-info btn-rounded my-0 border col-1" style="display: none" type="button" id="compareButton"></button><button class="ml-3 spinnerSmall spinner-border align-self-center" style="width: 1.75rem; height: 1.75rem; min-width: 1.75rem;" role="status" id="spinnerSmall"></button><div class="col-2"></div>`
     }
 }
 
