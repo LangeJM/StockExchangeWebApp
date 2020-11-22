@@ -3,6 +3,8 @@ class CompareInfo extends CompanyInfo {
     constructor(companiesFrameContainer, symbols) {
         super();
         this.companiesFrameContainer = companiesFrameContainer;
+        this.companiesFrameContainer.innerHTML += `<div id="spinnerLarge" class="ml-3 spinner-border align-self-center" style="width: 6rem; height: 6rem" role="status"></div>`
+        this.companiesFrameContainer.classList.add("spinnerLarge", "justify-content-center", "align-items-end", "d-flex", "vh-100");
         this.symbols = symbols;
     }
 
@@ -34,6 +36,7 @@ class CompareInfo extends CompanyInfo {
                 }
             });
         }
+        this.hideSpinnerLarge();
         
     }
 
@@ -68,15 +71,14 @@ class CompareInfo extends CompanyInfo {
         
         this.companiesFrameContainer.innerHTML += `
         <div class="superContainer${i} ${colClass} px-3">
-            <div id="spinnerLarge${i}" class="ml-3 spinner-border align-self-center spinnerLarge" style="width: 4rem; height: 4rem" role="status"></div>
             <div class="container elementsToHide p-3 justify-content-center border rounded mt-3">
             <div class="row h4">
                 <div class="col-2 align-self-center"><img id="companyLabel${i}" src="" class="img-fluid imgResizeNormal"></div>
                 <div id="companyNameSymbolLink${i}" class="align-self-center col-10"><a href=""></a></div>
             </div>
-            <div class="row pt-3">
-                <div class="col-2 align-self-center" id="companyStockPrice${i}"></div>
-                <div id="companyStockPriceChange${i}" class="align-self-center col-10" style="color: rgb(237, 41, 38);"></div>
+            <div class="row pt-3 pl-3">
+                <div id="companyStockPrice${i}"></div>
+                <div id="companyStockPriceChange${i}" class="pl-2"color: rgb(237, 41, 38);"></div>
             </div>
             <div class="row pt-3">
                 <div class="col-9 align-self-center small" id="companyDescription${i}"></div>
@@ -124,7 +126,13 @@ class CompareInfo extends CompanyInfo {
             borderColor: '#0056B3',
             data: companyHistory[i]
         };
-
-        // this.hideSpinnerLarge();
     }
+
+    hideSpinnerLarge() {
+        document.getElementById("spinnerLarge").classList.add("spinnerLarge");
+        this.companiesFrameContainer.classList.remove("spinnerLarge", "vh-100");
+        this.companiesFrameContainer.classList.add("mt-5");
+        
+    }
+
 }
